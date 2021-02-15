@@ -3,14 +3,20 @@ const Theme = {
   DARK: 'dark-theme',
 };
 const themeSwitchToggleRef = document.querySelector('#theme-switch-toggle');
-document.body.classList.add(localStorage.getItem('theme'));
+document.body.classList.add(Theme.LIGHT);
 
-themeSwitchToggleRef.addEventListener('change', handleThemeSwitch);
+if (localStorage.getItem('theme') === Theme.DARK) {
+  document.body.classList.toggle(Theme.DARK);
+}
 
-function handleThemeSwitch(event) {
+themeSwitchToggleRef.addEventListener('change', changeThemeSwitch);
+
+function changeThemeSwitch(event) {
   if (document.body.classList.toggle(Theme.DARK)) {
     localStorage.setItem('theme', Theme.DARK);
-  } else if (document.body.classList.toggle(Theme.LIGHT)) {
-    localStorage.setItem('theme', Theme.LIGHT);
+    themeSwitchToggleRef.checked = true;
+  }
+  if (document.body.classList.toggle(Theme.LIGHT)) {
+    localStorage.setItem('theme', Theme.DARK);
   }
 }
